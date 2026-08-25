@@ -5,14 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://u0tlphrmqrm4" path="res://scenes/components/death_area.tscn" id="2_kro1m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lg3a2"]
-radius = 6.0
+radius = 4.0
 
 [node name="OrbitHook" type="Node2D" unique_id=2104699208]
 
 [node name="Hook" parent="." unique_id=1148771983 instance=ExtResource("1_ngexi")]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=794018972]
-scale = Vector2(0.12, 0.12)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_dvyty")
 
 [node name="DeathArea" parent="." unique_id=1380144523 instance=ExtResource("2_kro1m")]

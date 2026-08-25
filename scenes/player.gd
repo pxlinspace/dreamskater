@@ -7,7 +7,13 @@ enum State {
 }
 
 const MAX_HOOK_DISTANCE_SQUARED: float = 22500
-const DEFAULT_SPEED: float = 90.0
+
+const DEFAULT_SPEED: float = 125.0
+const DEFAULT_ACCEL: float = 100.0
+const INITIAL_ORBIT_SPEED: float = 35.0
+const MAX_ORBIT_SPEED: float = 125.0
+const RELEASE_ORBIT_ACCEL: float = 50.0
+const ORBIT_ACCEL: float = 140.0
 
 var direction: Vector2 = Vector2.RIGHT
 var speed: float = 0
@@ -25,21 +31,29 @@ func _input(event: InputEvent) -> void:
 		
 		if state == State.DEFAULT:
 			var closest_hook := get_closest_hook()
-			if closest_hook:
-				state = State.HOOKED
-				hook_type = closest_hook.type
-				hook_position = closest_hook.global_position
+			if not closest_hook:
+				return
+			state = State.HOOKED
+			hook_type = closest_hook.type
+			hook_position = closest_hook.global_position
+			match hook_type:
+				Hook.HookType.ORBIT:
+					speed = INITIAL_ORBIT_SPEED
+
 			return
 	
 	elif event.is_action_released("tap"):
 		if state == State.HOOKED:
 			state = State.DEFAULT
+			speed += RELEASE_ORBIT_ACCEL
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if state == State.DEFAULT:
-		speed = DEFAULT_SPEED # temp code cuz speed will be variable
+		speed = move_toward(speed, DEFAULT_SPEED, DEFAULT_ACCEL * delta)
 	elif state == State.HOOKED:
+		speed = move_toward(speed, MAX_ORBIT_SPEED, ORBIT_ACCEL * delta)
+
 		match hook_type:
 			Hook.HookType.ORBIT:
 				var direction_to_hook: Vector2 = (hook_position - global_position).normalized()
