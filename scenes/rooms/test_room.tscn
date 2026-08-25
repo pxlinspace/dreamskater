@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cv7ardaxxr1r6"]
+
+[ext_resource type="PackedScene" uid="uid://ciip6eqvxyp5p" path="res://scenes/player.tscn" id="1_mjm5x"]
+[ext_resource type="PackedScene" uid="uid://sshx66tdsbck" path="res://scenes/hooks/orbit_hook.tscn" id="2_fn815"]
+
+[node name="TestRoom" type="Node2D" unique_id=1810655855]
+
+[node name="Player" parent="." unique_id=1061041153 instance=ExtResource("1_mjm5x")]
+position = Vector2(133, 89)
+
+[node name="OrbitHook" parent="." unique_id=2104699208 instance=ExtResource("2_fn815")]
+position = Vector2(260, 139)
+
+[node name="OrbitHook2" parent="." unique_id=1636546394 instance=ExtResource("2_fn815")]
+position = Vector2(423, 230)
