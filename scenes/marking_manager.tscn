@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bwqddd65w35il"]
+
+[ext_resource type="Script" uid="uid://c7yoooklgbfr0" path="res://scenes/marking_manager.gd" id="1_tju6p"]
+
+[node name="MarkingManager" type="Node2D" unique_id=932413781]
+script = ExtResource("1_tju6p")
