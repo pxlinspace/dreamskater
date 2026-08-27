@@ -1,6 +1,7 @@
-class_name Player extends CharacterBody2D
+class_name Player extends Node2D
 
-signal started_hook
+signal hooked
+signal unhooked
 
 enum State {
 	IDLE,
@@ -18,8 +19,11 @@ const MAX_ORBIT_SPEED: float = 125.0
 const RELEASE_ORBIT_ACCEL: float = 50.0
 const ORBIT_ACCEL: float = 140.0
 
-var direction: Vector2 = Vector2.RIGHT
 var speed: float = 0
+var forward_direction: Vector2 = Vector2.RIGHT
+var orbit_angle: float
+var orbit_distance: float
+var orbit_direction: int = 1
 
 var state := State.IDLE
 var hook_type: Hook.HookType
@@ -38,35 +42,39 @@ func _input(event: InputEvent) -> void:
 			if not closest_hook:
 				return
 			state = State.HOOKED
-			started_hook.emit()
+			hooked.emit()
 			hook_type = closest_hook.type
 			hook_position = closest_hook.global_position
 			match hook_type:
 				Hook.HookType.ORBIT:
 					speed = INITIAL_ORBIT_SPEED
+					var relative_position: Vector2 = (global_position - hook_position)
+					orbit_direction = -1 if relative_position.angle_to(forward_direction) < 0 else 1
+					orbit_distance = relative_position.length()
+					orbit_angle = relative_position.angle()
 			return
 	
 	
 	elif event.is_action_released("tap"):
 		if state == State.HOOKED:
+			unhooked.emit()
 			state = State.DEFAULT
 			speed += RELEASE_ORBIT_ACCEL
 
 
 func _physics_process(delta: float) -> void:
-	move_and_slide()
-
 	if state == State.DEFAULT:
 		speed = move_toward(speed, BASE_DEFAULT_SPEED, DEFAULT_ACCEL * delta)
+		position += forward_direction * speed * delta
+
 	elif state == State.HOOKED:
-		speed = move_toward(speed, MAX_ORBIT_SPEED, ORBIT_ACCEL * delta)
 		match hook_type:
 			Hook.HookType.ORBIT:
-				var direction_to_hook: Vector2 = (hook_position - global_position).normalized()
-				var is_rotating_clockwise: bool = direction_to_hook.angle_to(direction) < 0
-				direction = direction_to_hook.rotated(PI/2 * (-1 if is_rotating_clockwise else 1)) # THIS MATH IS NOT PRECISE AND WILL LOSE ACCURACY OVER TIME
-
-	velocity = speed * direction
+				speed = move_toward(speed, MAX_ORBIT_SPEED, ORBIT_ACCEL * delta)
+				orbit_angle += speed / orbit_distance * orbit_direction * delta
+				var offset_position := Vector2(cos(orbit_angle), sin(orbit_angle)) * orbit_distance
+				position = hook_position + offset_position
+				forward_direction = offset_position.rotated(PI/2 * orbit_direction).normalized()
 
 
 func _on_hitbox_area_entered(_area: Area2D) -> void:

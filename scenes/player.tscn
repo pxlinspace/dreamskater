@@ -7,23 +7,19 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lg3a2"]
 radius = 4.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1061041153]
-collision_mask = 0
+[node name="Player" type="Node2D" unique_id=157678063]
 script = ExtResource("1_3vyb7")
-
-[node name="CollisionSprite" type="Sprite2D" parent="." unique_id=1926902132]
-scale = Vector2(0.062, 0.062)
-texture = ExtResource("3_qhqgy")
 
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=2120151004]
 position = Vector2(0, -16)
 scale = Vector2(0.171875, 0.25)
 texture = ExtResource("2_g2els")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1150800540]
-shape = SubResource("CircleShape2D_lg3a2")
-
 [node name="Hitbox" type="Area2D" parent="." unique_id=1175249397]
+
+[node name="CollisionSprite" type="Sprite2D" parent="Hitbox" unique_id=1926902132]
+scale = Vector2(0.062, 0.062)
+texture = ExtResource("3_qhqgy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=236083174]
 shape = SubResource("CircleShape2D_lg3a2")
