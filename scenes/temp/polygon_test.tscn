@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dql8ydvdhpsep"]
+
+[ext_resource type="Script" uid="uid://dyko57owbhl7q" path="res://scenes/temp/polygon_test.gd" id="1_3igp3"]
+
+[node name="PolygonTest" type="Node2D" unique_id=367645102]
+script = ExtResource("1_3igp3")
+
+[node name="Polygon1" type="Polygon2D" parent="." unique_id=1047443101]
+polygon = PackedVector2Array(369, 69, 132, 98, 112, 225, 112, 225, 351, 292, 541, 179)
+
+[node name="Polygon2" type="Polygon2D" parent="Polygon1" unique_id=396355889]
+polygon = PackedVector2Array(99, 25, 136, 153, 182, 40, 446, 29, 460, 158, 487, -31)
+
+[node name="SubPolygon" type="Polygon2D" parent="Polygon1" unique_id=1820876318]
+position = Vector2(-9, -10)
+color = Color(0.7908668, 0, 0.365656, 1)
+polygon = PackedVector2Array(306, 118, 186, 163, 315, 238, 399, 168)

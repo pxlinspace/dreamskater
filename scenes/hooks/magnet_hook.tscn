@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c1pkkc362d6mh"]
 
-[ext_resource type="PackedScene" uid="uid://7cg0yejgu4sb" path="res://scenes/components/hook.tscn" id="1_ab2pd"]
+[ext_resource type="PackedScene" uid="uid://7cg0yejgu4sb" path="res://scenes/components/hook_component.tscn" id="1_ab2pd"]
 [ext_resource type="Texture2D" uid="uid://dulvlokjfch41" path="res://icon.svg" id="2_ab2pd"]
 [ext_resource type="PackedScene" uid="uid://u0tlphrmqrm4" path="res://scenes/components/death_area.tscn" id="3_2s4wo"]
 
@@ -9,7 +9,7 @@ radius = 4.0
 
 [node name="MagnetHook" type="Node2D" unique_id=2104699208]
 
-[node name="Hook" parent="." unique_id=1148771983 instance=ExtResource("1_ab2pd")]
+[node name="Hook" parent="." unique_id=1148771983 groups=["hook_components"] instance=ExtResource("1_ab2pd")]
 type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2121190133]

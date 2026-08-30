@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://7cg0yejgu4sb"]
+
+[ext_resource type="Script" uid="uid://d2ruxpx0xjww4" path="res://scenes/components/hook_component.gd" id="1_0sam3"]
+
+[node name="HookComponent" type="Node2D" unique_id=1148771983 groups=["hook_components"]]
+script = ExtResource("1_0sam3")
