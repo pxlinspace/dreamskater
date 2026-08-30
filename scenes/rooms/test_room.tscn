@@ -4,18 +4,22 @@
 [ext_resource type="PackedScene" uid="uid://ciip6eqvxyp5p" path="res://scenes/player.tscn" id="1_mjm5x"]
 [ext_resource type="PackedScene" uid="uid://sshx66tdsbck" path="res://scenes/hooks/orbit_hook.tscn" id="2_fn815"]
 [ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/marking_manager.tscn" id="4_betf1"]
+[ext_resource type="PackedScene" uid="uid://c1pkkc362d6mh" path="res://scenes/hooks/magnet_hook.tscn" id="4_nnide"]
 
 [node name="TestRoom" type="Node2D" unique_id=1810655855]
 script = ExtResource("1_i7p6j")
+
+[node name="MarkingManager" parent="." unique_id=932413781 node_paths=PackedStringArray("player") instance=ExtResource("4_betf1")]
+player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=1061041153 instance=ExtResource("1_mjm5x")]
 position = Vector2(47, 67)
 
 [node name="OrbitHook" parent="." unique_id=2104699208 instance=ExtResource("2_fn815")]
-position = Vector2(330, 182)
+position = Vector2(1383, 316)
 
 [node name="OrbitHook2" parent="." unique_id=1636546394 instance=ExtResource("2_fn815")]
-position = Vector2(493, 273)
+position = Vector2(344, 193)
 
-[node name="MarkingManager" parent="." unique_id=932413781 node_paths=PackedStringArray("player") instance=ExtResource("4_betf1")]
-player = NodePath("../Player")
+[node name="MagnetHook" parent="." unique_id=2093279279 instance=ExtResource("4_nnide")]
+position = Vector2(237, 77)
