@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1fnh3sschik"]
 
-[ext_resource type="Script" uid="uid://buddm0pqaq5km" path="res://scenes/rooms/test_chapter/player_spawner.gd" id="1_wvdvl"]
+[ext_resource type="Script" uid="uid://buddm0pqaq5km" path="res://scenes/spawners/player_spawner.gd" id="1_wvdvl"]
 [ext_resource type="Texture2D" uid="uid://bjhtjxgjy75xo" path="res://assets/placeholders/placeholder_circle.png" id="1_yts7w"]
 
 [node name="PlayerSpawner" type="Node2D" unique_id=731833195]

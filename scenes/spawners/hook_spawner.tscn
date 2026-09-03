@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dycmnxfwboouy"]
+
+[ext_resource type="Script" uid="uid://d30ivjsr0hk8o" path="res://scenes/spawners/hook_spawner.gd" id="1_isbky"]
+
+[node name="HookSpawner" type="Marker2D" unique_id=560104995]
+script = ExtResource("1_isbky")

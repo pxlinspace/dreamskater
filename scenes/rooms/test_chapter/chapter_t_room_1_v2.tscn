@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://j1l7whnhlbyx"]
 
+[ext_resource type="PackedScene" uid="uid://dycmnxfwboouy" path="res://scenes/spawners/hook_spawner.tscn" id="3_vb3du"]
 [ext_resource type="PackedScene" uid="uid://k50557oaofd0" path="res://scenes/room_generator.tscn" id="7_21eve"]
-[ext_resource type="PackedScene" uid="uid://1fnh3sschik" path="res://scenes/rooms/test_chapter/player_spawner.tscn" id="8_sq51a"]
+[ext_resource type="PackedScene" uid="uid://1fnh3sschik" path="res://scenes/spawners/player_spawner.tscn" id="8_sq51a"]
 
 [node name="ChapterTRoom1" type="Node2D" unique_id=30857133]
 
@@ -10,5 +11,15 @@ output_parent = NodePath("../Level")
 
 [node name="PlayerSpawner" parent="RoomGenerator" unique_id=731833195 instance=ExtResource("8_sq51a")]
 position = Vector2(161, 155)
+rotation = -0.25917238
+
+[node name="Node2D" type="Node2D" parent="RoomGenerator" unique_id=5480614]
+
+[node name="HookSpawner" parent="RoomGenerator" unique_id=560104995 instance=ExtResource("3_vb3du")]
+position = Vector2(475, 111)
+
+[node name="HookSpawner2" parent="RoomGenerator" unique_id=581718156 instance=ExtResource("3_vb3du")]
+position = Vector2(479, 256)
+hook_type = 1
 
 [node name="Level" type="Node2D" parent="." unique_id=772344884]
