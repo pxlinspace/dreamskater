@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="DREAMSKATER"
-run/main_scene="uid://ra21cfho2btf"
+run/main_scene="uid://j1l7whnhlbyx"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

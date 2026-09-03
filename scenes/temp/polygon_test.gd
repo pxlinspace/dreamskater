@@ -1,7 +1,8 @@
 extends Node2D
 
-# clip (difference)
-# merge (union)
+# clip (difference) - SubtractionShape
+# merge (union) - 
+
 
 @onready var polygon_1: Polygon2D = $Polygon1
 @onready var polygon_2: Polygon2D = $Polygon1/Polygon2

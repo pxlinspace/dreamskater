@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://j1l7whnhlbyx"]
+
+[ext_resource type="PackedScene" uid="uid://k50557oaofd0" path="res://scenes/room_generator.tscn" id="7_21eve"]
+[ext_resource type="PackedScene" uid="uid://1fnh3sschik" path="res://scenes/rooms/test_chapter/player_spawner.tscn" id="8_sq51a"]
+
+[node name="ChapterTRoom1" type="Node2D" unique_id=30857133]
+
+[node name="RoomGenerator" parent="." unique_id=1276400836 node_paths=PackedStringArray("output_parent") instance=ExtResource("7_21eve")]
+output_parent = NodePath("../Level")
+
+[node name="PlayerSpawner" parent="RoomGenerator" unique_id=731833195 instance=ExtResource("8_sq51a")]
+position = Vector2(161, 155)
+
+[node name="Level" type="Node2D" parent="." unique_id=772344884]

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://1fnh3sschik"]
+
+[ext_resource type="Script" uid="uid://buddm0pqaq5km" path="res://scenes/rooms/test_chapter/player_spawner.gd" id="1_wvdvl"]
+[ext_resource type="Texture2D" uid="uid://bjhtjxgjy75xo" path="res://assets/placeholders/placeholder_circle.png" id="1_yts7w"]
+
+[node name="PlayerSpawner" type="Node2D" unique_id=731833195]
+rotation = -1.1239921
+script = ExtResource("1_wvdvl")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=688747311]
+modulate = Color(1, 1, 1, 0.43529412)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_yts7w")
+
+[node name="HitboxSprite" type="Sprite2D" parent="." unique_id=922042423]
+scale = Vector2(0.031, 0.031)
+texture = ExtResource("1_yts7w")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=864200597]
+points = PackedVector2Array(0, 0, 122.474, 0)
+width = 1.5
