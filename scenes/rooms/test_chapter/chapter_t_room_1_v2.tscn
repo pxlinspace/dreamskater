@@ -7,8 +7,7 @@
 
 [node name="ChapterTRoom1" type="Node2D" unique_id=30857133]
 
-[node name="RoomGenerator" parent="." unique_id=1276400836 node_paths=PackedStringArray("output_parent") instance=ExtResource("7_21eve")]
-output_parent = NodePath("../Level")
+[node name="RoomGenerator" parent="." unique_id=1276400836 instance=ExtResource("7_21eve")]
 
 [node name="DeathPolygonSpawnerTemp" parent="RoomGenerator" unique_id=1501289778 instance=ExtResource("4_jpbxj")]
 
@@ -21,5 +20,3 @@ position = Vector2(160.00002, 204.00002)
 
 [node name="HookSpawner" parent="RoomGenerator" unique_id=560104995 instance=ExtResource("3_vb3du")]
 position = Vector2(476, 173)
-
-[node name="Level" type="Node2D" parent="." unique_id=772344884]

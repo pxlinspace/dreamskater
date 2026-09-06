@@ -1,14 +1,23 @@
 extends Node2D
 
-@export var output_parent: Node2D
-
+const ROOM: PackedScene = preload("uid://tw1iwatpvj2l")
 
 func _ready() -> void:
 	hide()
+	var room: Room = ROOM.instantiate()
+	add_sibling.call_deferred(room)
+
+	await room.ready
 	
 	for spawner in get_children():
 		if not spawner.has_method("get_spawn"):
 			continue
 		var spawn: Node2D = spawner.get_spawn()
-		# also account for spawn that need a specific parent for z indexing, like hooks have their own parent and killareas have their own parent.
-		output_parent.add_child(spawn)
+
+		if spawn is Hook:
+			room.add_hook(spawn)
+		elif spawn is DeathPolygon:
+			room.add_death_polygon(spawn)
+		elif spawn is Player:
+			room.add_player(spawn)
+	

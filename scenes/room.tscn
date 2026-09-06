@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://tw1iwatpvj2l"]
+
+[ext_resource type="Script" uid="uid://b7s8lpmghq6tx" path="res://scenes/room.gd" id="1_36trf"]
+
+[node name="Room" type="Node2D" unique_id=1604176970]
+script = ExtResource("1_36trf")
+
+[node name="MarkingManager" type="Node2D" parent="." unique_id=1442828782]
+
+[node name="DeathPolygonContainer" type="Node2D" parent="." unique_id=301349943]
+
+[node name="HookContainer" type="Node2D" parent="." unique_id=1958008927]
+
+[node name="PlayerContainer" type="Node2D" parent="." unique_id=1848996211]

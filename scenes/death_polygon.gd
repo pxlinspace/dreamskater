@@ -1,4 +1,4 @@
-extends Area2D
+class_name DeathPolygon extends Area2D
 
 
 func _draw() -> void:
