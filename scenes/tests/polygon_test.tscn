@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dql8ydvdhpsep"]
 
-[ext_resource type="Script" uid="uid://dyko57owbhl7q" path="res://scenes/temp/polygon_test.gd" id="1_3igp3"]
+[ext_resource type="Script" uid="uid://dyko57owbhl7q" path="res://scenes/tests/polygon_test.gd" id="1_3igp3"]
 
 [node name="PolygonTest" type="Node2D" unique_id=367645102]
 script = ExtResource("1_3igp3")

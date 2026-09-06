@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d0ip33ho0xvv5"]
+
+[ext_resource type="Script" uid="uid://bs7464vs1mwgu" path="res://scenes/spawners/death_polygon_spawner/death_polygon_spawner.gd" id="1_jnj2d"]
+[ext_resource type="PackedScene" uid="uid://daj1sww82k14v" path="res://scenes/spawners/death_polygon_spawner/polygon_part.tscn" id="2_dl7qw"]
+[ext_resource type="PackedScene" uid="uid://chrg12vd1sj42" path="res://scenes/spawners/death_polygon_spawner/PolygonDifference.tscn" id="3_6a6gd"]
+[ext_resource type="Script" uid="uid://hvegm888bdn8" path="res://scenes/spawners/death_polygon_spawner/polygon_difference.gd" id="4_ddg3u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg3a2"]
+
+[node name="DeathPolygonSpawner" type="Node2D" unique_id=1282180849]
+script = ExtResource("1_jnj2d")
+
+[node name="PolygonPart" parent="." unique_id=665115234 instance=ExtResource("2_dl7qw")]
+polygon = PackedVector2Array(296.20428, 111.613976, 87.20429, 67.613976, 63.204292, 185.61398, 429.20428, 310.61398, 538.2043, 106.613976, 393.20428, 45.613976)
+uv = PackedVector2Array(296.20428, 111.613976, 87.20429, 67.613976, 63.204292, 185.61398, 429.20428, 310.61398, 538.2043, 106.613976, 393.20428, 45.613976)
+
+[node name="PolygonDifference2" parent="PolygonPart" unique_id=1913975779 instance=ExtResource("3_6a6gd")]
+polygon = PackedVector2Array(254.54074, 60.27398, 172.54077, 112.27398, 21.540771, 76.27398, 3.5407715, 117.27398, 233.54074, 217.27393, 301.54074, 114.27398)
+script = ExtResource("4_ddg3u")
+
+[node name="PolygonDifference" parent="PolygonPart" unique_id=1400761467 instance=ExtResource("3_6a6gd")]
+polygon = PackedVector2Array(412.42044, 120.115456, 330.42047, 172.11546, 179.42047, 136.11546, 161.42047, 177.11546, 391.42044, 277.11542, 459.42044, 174.11546)
+script = ExtResource("4_ddg3u")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1936214410]
+material = SubResource("ShaderMaterial_lg3a2")

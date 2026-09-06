@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://btpgd2aieojm7"]
+
+[ext_resource type="Script" uid="uid://baaf2so1hs0ci" path="res://scenes/spawners/death_polygon_spawner/death_polygon_spawner_temp.gd" id="1_kljbn"]
+
+[node name="DeathPolygonSpawnerTemp" type="Node2D" unique_id=1501289778]
+script = ExtResource("1_kljbn")

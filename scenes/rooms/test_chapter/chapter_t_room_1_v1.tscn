@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ra21cfho2btf"]
 
 [ext_resource type="PackedScene" uid="uid://ciip6eqvxyp5p" path="res://scenes/player/player.tscn" id="1_sbl8x"]
-[ext_resource type="PackedScene" uid="uid://bjar86ole4cyc" path="res://scenes/temp/death_polygon.tscn" id="2_em4xl"]
+[ext_resource type="PackedScene" uid="uid://bjar86ole4cyc" path="res://scenes/death_polygon.tscn" id="2_em4xl"]
 [ext_resource type="PackedScene" uid="uid://sshx66tdsbck" path="res://scenes/hooks/orbit_hook.tscn" id="3_voabf"]
 [ext_resource type="PackedScene" uid="uid://bfunklv3gv4ih" path="res://scenes/hook_manager.tscn" id="4_inr44"]
 [ext_resource type="PackedScene" uid="uid://c1pkkc362d6mh" path="res://scenes/hooks/magnet_hook.tscn" id="4_n2gwh"]
@@ -10,6 +10,14 @@
 [node name="ChapterTRoom1" type="Node2D" unique_id=30857133]
 
 [node name="Room" type="Node2D" parent="." unique_id=140266399]
+
+[node name="DeathPolygon" parent="Room" unique_id=781244268 instance=ExtResource("2_em4xl")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Room/DeathPolygon" unique_id=95514305]
+polygon = PackedVector2Array(312, 8, 365, 134, 448, 30, 560, 57, 611, 133, 604, 278, 502, 332, 314, 351, 200, 385, 594, 423, 754, 300, 707, 66, 675, -45, 353, -47)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Room/DeathPolygon" unique_id=1549673713]
+polygon = PackedVector2Array(-66, -64, -88, 381, 353, 435, 300, 326, 76, 298, 23, 191, 68, 41, 216, 18, 423, 52, 511, -152)
 
 [node name="MarkingManager" parent="Room" unique_id=932413781 node_paths=PackedStringArray("player") instance=ExtResource("4_qdjgu")]
 player = NodePath("../Player")
@@ -28,11 +36,3 @@ position = Vector2(132, 187)
 
 [node name="Player" parent="Room" unique_id=157678063 instance=ExtResource("1_sbl8x")]
 position = Vector2(168, 211)
-
-[node name="DeathPolygon" parent="Room" unique_id=781244268 instance=ExtResource("2_em4xl")]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Room/DeathPolygon" unique_id=95514305]
-polygon = PackedVector2Array(312, 8, 365, 134, 448, 30, 560, 57, 611, 133, 604, 278, 502, 332, 314, 351, 200, 385, 594, 423, 754, 300, 707, 66, 675, -45, 353, -47)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Room/DeathPolygon" unique_id=1549673713]
-polygon = PackedVector2Array(-66, -64, -88, 381, 353, 435, 300, 326, 76, 298, 23, 191, 68, 41, 216, 18, 423, 52, 511, -152)

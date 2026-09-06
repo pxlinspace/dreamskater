@@ -15,3 +15,4 @@ func _on_hook_highlighted() -> void:
 
 func _on_hook_unhighlighted() -> void:
 	anchor.modulate = Color.WHITE
+

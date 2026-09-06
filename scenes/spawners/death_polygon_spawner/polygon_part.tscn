@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://daj1sww82k14v"]
+
+[ext_resource type="Script" uid="uid://n2dfa6hpl404" path="res://scenes/spawners/death_polygon_spawner/polygon_part.gd" id="1_brlq6"]
+
+[node name="PolygonPart" type="Polygon2D" unique_id=665115234]
+color = Color(0.5529412, 1, 1, 0.5764706)
+script = ExtResource("1_brlq6")

@@ -1,0 +1,1 @@
+class_name PolygonDifference extends Polygon2D

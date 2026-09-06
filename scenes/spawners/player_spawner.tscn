@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bjhtjxgjy75xo" path="res://assets/placeholders/placeholder_circle.png" id="1_yts7w"]
 
 [node name="PlayerSpawner" type="Node2D" unique_id=731833195]
-rotation = -1.1239921
 script = ExtResource("1_wvdvl")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=688747311]

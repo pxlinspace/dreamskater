@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://chrg12vd1sj42"]
+
+[node name="PolygonDifference" type="Polygon2D" unique_id=1400761467]
+color = Color(1, 0.59623796, 0.6243786, 0.5764706)
