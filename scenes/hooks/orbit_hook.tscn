@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://sshx66tdsbck"]
 
 [ext_resource type="Script" uid="uid://62drbwrhqh55" path="res://scenes/hooks/orbit_hook.gd" id="1_ac34v"]
-[ext_resource type="PackedScene" uid="uid://7cg0yejgu4sb" path="res://scenes/components/hook_component.tscn" id="1_ngexi"]
 [ext_resource type="Texture2D" uid="uid://cmd25lkfjsm37" path="res://assets/placeholders/orbit_hook.png" id="2_dvyty"]
 [ext_resource type="PackedScene" uid="uid://u0tlphrmqrm4" path="res://scenes/components/death_area.tscn" id="2_kro1m"]
 [ext_resource type="Script" uid="uid://sixx7dlla8b5" path="res://scenes/hooks/circle_anim.gd" id="4_m40mp"]
@@ -48,10 +47,8 @@ _data = {
 &"idle": SubResource("Animation_m40mp")
 }
 
-[node name="OrbitHook" type="Node2D" unique_id=2104699208]
+[node name="OrbitHook" type="Node2D" unique_id=2104699208 groups=["hooks"]]
 script = ExtResource("1_ac34v")
-
-[node name="Hook" parent="." unique_id=1148771983 instance=ExtResource("1_ngexi")]
 
 [node name="DeathArea" parent="." unique_id=1380144523 instance=ExtResource("2_kro1m")]
 
@@ -73,6 +70,4 @@ wait_time = 0.45
 [node name="Sprite2D" type="Sprite2D" parent="Anchor" unique_id=794018972]
 texture = ExtResource("2_dvyty")
 
-[connection signal="highlighted" from="Hook" to="." method="_on_hook_highlighted"]
-[connection signal="unhighlighted" from="Hook" to="." method="_on_hook_unhighlighted"]
 [connection signal="timeout" from="Anchor/CircleAnim/CircleTimer" to="." method="_on_circle_timer_timeout"]

@@ -31,7 +31,7 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 [global_group]
 
-hook_components=""
+hooks=""
 
 [input]
 

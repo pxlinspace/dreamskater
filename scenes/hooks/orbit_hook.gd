@@ -1,4 +1,4 @@
-extends Node2D
+extends Hook
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var anchor: Node2D = $Anchor
@@ -8,11 +8,14 @@ func _ready() -> void:
 	animation_player.seek(randf() * animation_player.get_section_end_time())
 
 
-func _on_hook_highlighted() -> void:
+func get_type() -> Hook.Type:
+	return Type.ORBIT
+
+
+func highlight() -> void:
 	anchor.modulate = Color.YELLOW
 	circle_anim.create_circle(0.5)
 
 
-func _on_hook_unhighlighted() -> void:
+func unhighlight() -> void:
 	anchor.modulate = Color.WHITE
-

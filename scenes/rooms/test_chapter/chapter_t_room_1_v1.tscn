@@ -25,10 +25,10 @@ player = NodePath("../Player")
 [node name="HookManager" parent="Room" unique_id=2123059623 node_paths=PackedStringArray("player") instance=ExtResource("4_inr44")]
 player = NodePath("../Player")
 
-[node name="OrbitHook" parent="Room/HookManager" unique_id=2104699208 instance=ExtResource("3_voabf")]
+[node name="OrbitHook" parent="Room/HookManager" unique_id=2104699208 groups=["hooks"] instance=ExtResource("3_voabf")]
 position = Vector2(490, 179)
 
-[node name="OrbitHook2" parent="Room/HookManager" unique_id=1557844053 instance=ExtResource("3_voabf")]
+[node name="OrbitHook2" parent="Room/HookManager" unique_id=1557844053 groups=["hooks"] instance=ExtResource("3_voabf")]
 position = Vector2(490, 268)
 
 [node name="MagnetHook" parent="Room/HookManager" unique_id=122242843 instance=ExtResource("4_n2gwh")]
