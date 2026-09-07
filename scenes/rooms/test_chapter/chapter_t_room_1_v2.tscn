@@ -20,3 +20,6 @@ position = Vector2(160.00002, 204.00002)
 
 [node name="HookSpawner" parent="RoomGenerator" unique_id=560104995 instance=ExtResource("3_vb3du")]
 position = Vector2(476, 173)
+
+[node name="HookSpawner2" parent="RoomGenerator" unique_id=1585335364 instance=ExtResource("3_vb3du")]
+position = Vector2(261, 257)

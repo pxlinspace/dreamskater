@@ -1,5 +1,6 @@
 class_name Room extends Node2D
 
+@onready var marking_manager: MarkingManager = $MarkingManager
 @onready var hook_container: Node2D = $HookContainer
 @onready var death_polygon_container: Node2D = $DeathPolygonContainer
 @onready var player_container: Node2D = $PlayerContainer

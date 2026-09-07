@@ -1,7 +1,7 @@
 extends Node2D
 
-
 const PLAYER: PackedScene = preload("uid://ciip6eqvxyp5p")
+
 
 func get_spawn() -> Player:
 	var player: Player = PLAYER.instantiate()

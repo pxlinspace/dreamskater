@@ -8,6 +8,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lg3a2"]
 radius = 2.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_vknqg"]
+radius = 125.0
+
 [node name="Player" type="Node2D" unique_id=157678063]
 script = ExtResource("1_3vyb7")
 
@@ -27,7 +30,14 @@ texture = ExtResource("3_qhqgy")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=236083174]
 shape = SubResource("CircleShape2D_lg3a2")
 
-[node name="HookDetector" type="Node2D" parent="." unique_id=1265222247]
+[node name="HookDetector" type="Area2D" parent="." unique_id=737460383]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("4_dqkch")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HookDetector" unique_id=473088306]
+shape = SubResource("CircleShape2D_vknqg")
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_entered" from="HookDetector" to="HookDetector" method="_on_area_entered"]
+[connection signal="area_exited" from="HookDetector" to="HookDetector" method="_on_area_exited"]

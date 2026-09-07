@@ -15,6 +15,11 @@ run/main_scene="uid://j1l7whnhlbyx"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*uid://cf41iqgf7oolg"
+SignalBus="*uid://c20u0us563yfc"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=1
@@ -46,6 +51,7 @@ tap={
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="death areas"
+2d_physics/layer_3="hooks"
 
 [physics]
 

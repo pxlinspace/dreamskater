@@ -11,3 +11,11 @@ func highlight() -> void:
 
 func unhighlight() -> void:
 	pass
+
+
+func show_line() -> void:
+	pass
+
+
+func hide_line() -> void:
+	pass

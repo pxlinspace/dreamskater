@@ -22,8 +22,6 @@ const MAGNET_ACCEL: float = 800.0
 const RELEASE_MAGNET_SPEED: float = 300.0
 const MAGNET_HOLD_WAIT_TIME: float = 0.1
 
-const MAX_HOOK_DISTANCE_SQUARED: float = 15000
-
 var speed: float = 0
 var forward_direction: Vector2 = Vector2.RIGHT
 var orbit_angle: float
@@ -38,8 +36,10 @@ var magnet_hold_time: float = 0.0
 
 @onready var hook_detector: Node2D = $HookDetector
 
+
 func _ready() -> void:
-	hook_detector.max_hook_distance_squared = MAX_HOOK_DISTANCE_SQUARED
+	Global.player = self
+	SignalBus.player_ready.emit()
 
 
 func _input(event: InputEvent) -> void:

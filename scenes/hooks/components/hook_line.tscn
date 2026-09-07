@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://btbsvttqi81bv"]
+
+[ext_resource type="Script" uid="uid://bis12brsjkcec" path="res://scenes/hooks/components/hook_line.gd" id="1_xnpqx"]
+
+[node name="HookLine" type="Node2D" unique_id=1310716533]
+visible = false
+modulate = Color(1, 1, 1, 0)
+script = ExtResource("1_xnpqx")

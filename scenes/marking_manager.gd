@@ -3,21 +3,23 @@ class_name MarkingManager extends Node2D
 
 const POINT_DISTANCE_SQUARED: float = 100.0
 
-@export var player: Player
 # var points: PackedVector2Array = []
+# Note: I currently have a system that draws individual markings, but later I oughta
+# switch to a point system to account for shapes made up of multiple markings
 var markings: Array[PackedVector2Array] = []
 
 
 func _ready() -> void:
-	player.hooked.connect(_on_player_hooked)
+	await SignalBus.player_ready
+	Global.player.hooked.connect(_on_player_hooked)
 
 
 func _process(_delta: float) -> void:
-	if player.state == player.State.HOOKED:
+	if Global.player.state == Player.State.HOOKED:
 		queue_redraw()
 		var i: int = markings.size()-1
 		var j: int = markings[i].size()-1
-		markings[i][j] = player.global_position
+		markings[i][j] = Global.player.global_position
 		if markings[i].size() >= 2 and markings[i][j].distance_squared_to(markings[i][j - 1]) >= POINT_DISTANCE_SQUARED:
 			add_point()
 
@@ -35,4 +37,4 @@ func _on_player_hooked() -> void:
 
 
 func add_point() -> void:
-	markings[markings.size()-1].append(player.global_position)
+	markings[markings.size()-1].append(Global.player.global_position)

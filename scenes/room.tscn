@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://tw1iwatpvj2l"]
 
 [ext_resource type="Script" uid="uid://b7s8lpmghq6tx" path="res://scenes/room.gd" id="1_36trf"]
+[ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/marking_manager.tscn" id="2_ffxv4"]
 
 [node name="Room" type="Node2D" unique_id=1604176970]
 script = ExtResource("1_36trf")
 
-[node name="MarkingManager" type="Node2D" parent="." unique_id=1442828782]
+[node name="MarkingManager" parent="." unique_id=932413781 instance=ExtResource("2_ffxv4")]
 
 [node name="DeathPolygonContainer" type="Node2D" parent="." unique_id=301349943]
 
