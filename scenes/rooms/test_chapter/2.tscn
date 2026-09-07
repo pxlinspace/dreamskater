@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cqau7hgdo07no"]
+
+[ext_resource type="PackedScene" uid="uid://k50557oaofd0" path="res://scenes/room_generator.tscn" id="1_hpto3"]
+[ext_resource type="PackedScene" uid="uid://btpgd2aieojm7" path="res://scenes/spawners/death_polygon_spawner/death_polygon_spawner_temp.tscn" id="2_ribbj"]
+[ext_resource type="PackedScene" uid="uid://1fnh3sschik" path="res://scenes/spawners/player_spawner.tscn" id="3_ryn8g"]
+[ext_resource type="PackedScene" uid="uid://dycmnxfwboouy" path="res://scenes/spawners/hook_spawner.tscn" id="4_4ys8e"]
+
+[node name="ChapterTRoom1" type="Node2D" unique_id=30857133]
+
+[node name="RoomGenerator" parent="." unique_id=1276400836 instance=ExtResource("1_hpto3")]
+
+[node name="DeathPolygonSpawnerTemp" parent="RoomGenerator" unique_id=1501289778 instance=ExtResource("2_ribbj")]
+
+[node name="Polygon2D" type="Polygon2D" parent="RoomGenerator/DeathPolygonSpawnerTemp" unique_id=1405455025]
+position = Vector2(30, -9)
+color = Color(1, 1, 1, 0.22745098)
+polygon = PackedVector2Array(298, 16, 204, 69, 187, 153, 216, 216, 301, 277, 167, 226, 78, 276, 137, 323, 307, 353, 438, 308, 398, 238, 449, 181, 454, 99, 395, 23)
+
+[node name="Polygon2D2" type="Polygon2D" parent="RoomGenerator/DeathPolygonSpawnerTemp" unique_id=1403517842]
+position = Vector2(30, -9)
+color = Color(1, 1, 1, 0.22745098)
+polygon = PackedVector2Array(400, 134, 389, 149, 319, 138)
+
+[node name="PlayerSpawner" parent="RoomGenerator" unique_id=731833195 instance=ExtResource("3_ryn8g")]
+position = Vector2(197, 274)
+rotation = 0.19020611
+
+[node name="HookSpawner" parent="RoomGenerator" unique_id=560104995 instance=ExtResource("4_4ys8e")]
+position = Vector2(330, 267)
+
+[node name="HookSpawner2" parent="RoomGenerator" unique_id=1026214455 instance=ExtResource("4_4ys8e")]
+position = Vector2(348, 129)
