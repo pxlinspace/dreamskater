@@ -20,3 +20,4 @@ position = Vector2(160.00002, 204.00002)
 
 [node name="HookSpawner" parent="RoomGenerator" unique_id=560104995 instance=ExtResource("3_vb3du")]
 position = Vector2(476, 173)
+hook_type = 1

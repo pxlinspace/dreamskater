@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c1pkkc362d6mh"]
 
 [ext_resource type="Script" uid="uid://da7g6t7o5u846" path="res://scenes/hooks/magnet_hook.gd" id="1_ab2pd"]
+[ext_resource type="PackedScene" uid="uid://btbsvttqi81bv" path="res://scenes/hooks/components/hook_line.tscn" id="2_2r2nd"]
 [ext_resource type="Texture2D" uid="uid://dulvlokjfch41" path="res://icon.svg" id="2_ab2pd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ab2pd"]
@@ -9,8 +10,20 @@ radius = 0.5
 [sub_resource type="CircleShape2D" id="CircleShape2D_lg3a2"]
 radius = 4.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_vknqg"]
+radius = 8.0
+
 [node name="MagnetHook" type="Area2D" unique_id=848591010 groups=["hooks"]]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_ab2pd")
+
+[node name="HookLine" parent="." unique_id=1310716533 instance=ExtResource("2_2r2nd")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2121190133]
+rotation = 0.7853982
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_ab2pd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1638248730]
 shape = SubResource("CircleShape2D_ab2pd")
@@ -22,7 +35,10 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathArea" unique_id=605010815]
 shape = SubResource("CircleShape2D_lg3a2")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2121190133]
-rotation = 0.7853982
-scale = Vector2(0.09, 0.09)
-texture = ExtResource("2_ab2pd")
+[node name="PlayerExitArea" type="Area2D" parent="." unique_id=1946801805]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerExitArea" unique_id=1813358733]
+shape = SubResource("CircleShape2D_vknqg")
+
+[connection signal="area_exited" from="PlayerExitArea" to="." method="_on_player_exit_area_area_exited"]
