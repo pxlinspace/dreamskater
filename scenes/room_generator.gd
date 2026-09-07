@@ -16,8 +16,8 @@ func _ready() -> void:
 
 		if spawn is Hook:
 			room.add_hook(spawn)
-		elif spawn is DeathPolygon:
-			room.add_death_polygon(spawn)
+		elif spawn is DeathPolygonContainer:
+			room.add_obstacle(spawn)
 		elif spawn is Player:
 			room.add_player(spawn)
 	

@@ -8,7 +8,7 @@ script = ExtResource("1_36trf")
 
 [node name="MarkingManager" parent="." unique_id=932413781 instance=ExtResource("2_ffxv4")]
 
-[node name="DeathPolygonContainer" type="Node2D" parent="." unique_id=301349943]
+[node name="ObstacleContainer" type="Node2D" parent="." unique_id=301349943]
 
 [node name="HookContainer" type="Node2D" parent="." unique_id=1958008927]
 

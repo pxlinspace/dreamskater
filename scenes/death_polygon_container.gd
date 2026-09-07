@@ -1,0 +1,1 @@
+class_name DeathPolygonContainer extends Node2D
