@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://ra21cfho2btf"]
 
 [ext_resource type="PackedScene" uid="uid://ciip6eqvxyp5p" path="res://scenes/player/player.tscn" id="1_sbl8x"]
-[ext_resource type="PackedScene" uid="uid://bjar86ole4cyc" path="res://scenes/death_polygon.tscn" id="2_em4xl"]
+[ext_resource type="PackedScene" uid="uid://bjar86ole4cyc" path="res://scenes/objects/death_polygon.tscn" id="2_em4xl"]
 [ext_resource type="PackedScene" uid="uid://sshx66tdsbck" path="res://scenes/hooks/orbit_hook.tscn" id="3_voabf"]
-[ext_resource type="PackedScene" uid="uid://bfunklv3gv4ih" path="res://scenes/hook_manager.tscn" id="4_inr44"]
+[ext_resource type="PackedScene" path="res://scenes/hook_manager.tscn" id="4_inr44"]
 [ext_resource type="PackedScene" uid="uid://c1pkkc362d6mh" path="res://scenes/hooks/magnet_hook.tscn" id="4_n2gwh"]
-[ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/marking_manager.tscn" id="4_qdjgu"]
+[ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/objects/marking_manager.tscn" id="4_qdjgu"]
 
 [node name="ChapterTRoom1" type="Node2D" unique_id=30857133]
 

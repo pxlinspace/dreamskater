@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cv7ardaxxr1r6"]
 
-[ext_resource type="Script" uid="uid://corc5woj07jr6" path="res://scenes/rooms/test_room.gd" id="1_i7p6j"]
+[ext_resource type="Script" uid="uid://corc5woj07jr6" path="res://scenes/levels/test_room.gd" id="1_i7p6j"]
 [ext_resource type="PackedScene" uid="uid://ciip6eqvxyp5p" path="res://scenes/player/player.tscn" id="1_mjm5x"]
 [ext_resource type="PackedScene" uid="uid://sshx66tdsbck" path="res://scenes/hooks/orbit_hook.tscn" id="2_fn815"]
-[ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/marking_manager.tscn" id="4_betf1"]
+[ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/objects/marking_manager.tscn" id="4_betf1"]
 [ext_resource type="PackedScene" uid="uid://c1pkkc362d6mh" path="res://scenes/hooks/magnet_hook.tscn" id="4_nnide"]
 
 [node name="TestRoom" type="Node2D" unique_id=1810655855]

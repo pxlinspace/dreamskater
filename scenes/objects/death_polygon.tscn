@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bjar86ole4cyc"]
 
-[ext_resource type="Script" uid="uid://t42vot5tpg3k" path="res://scenes/death_polygon.gd" id="1_lcyw0"]
+[ext_resource type="Script" uid="uid://t42vot5tpg3k" path="res://scenes/objects/death_polygon.gd" id="1_lcyw0"]
 
 [node name="DeathPolygon" type="Area2D" unique_id=781244268]
 collision_layer = 2

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://3yrpbbdajl20"]
 
-[ext_resource type="Script" uid="uid://dkb1xpg5u5u5" path="res://scenes/death_polygon_container.gd" id="1_nbyli"]
+[ext_resource type="Script" uid="uid://dkb1xpg5u5u5" path="res://scenes/objects/death_polygon_container.gd" id="1_nbyli"]
 
 [node name="DeathPolygonContainer" type="Node2D" unique_id=849622156]
 script = ExtResource("1_nbyli")

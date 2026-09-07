@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://tw1iwatpvj2l"]
 
-[ext_resource type="Script" uid="uid://b7s8lpmghq6tx" path="res://scenes/room.gd" id="1_36trf"]
-[ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/marking_manager.tscn" id="2_ffxv4"]
+[ext_resource type="Script" uid="uid://b7s8lpmghq6tx" path="res://scenes/objects/room.gd" id="1_36trf"]
+[ext_resource type="PackedScene" uid="uid://bwqddd65w35il" path="res://scenes/objects/marking_manager.tscn" id="2_ffxv4"]
 
 [node name="Room" type="Node2D" unique_id=1604176970]
 script = ExtResource("1_36trf")
