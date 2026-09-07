@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://da7g6t7o5u846" path="res://scenes/hooks/magnet_hook.gd" id="1_ab2pd"]
 [ext_resource type="PackedScene" uid="uid://btbsvttqi81bv" path="res://scenes/hooks/components/hook_line.tscn" id="2_2r2nd"]
-[ext_resource type="Texture2D" uid="uid://dulvlokjfch41" path="res://icon.svg" id="2_ab2pd"]
+[ext_resource type="Texture2D" uid="uid://me2s0hw2tjwi" path="res://assets/placeholders/magnet_hook.png" id="3_ab2pd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ab2pd"]
 radius = 0.5
@@ -21,9 +21,7 @@ script = ExtResource("1_ab2pd")
 [node name="HookLine" parent="." unique_id=1310716533 instance=ExtResource("2_2r2nd")]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2121190133]
-rotation = 0.7853982
-scale = Vector2(0.09, 0.09)
-texture = ExtResource("2_ab2pd")
+texture = ExtResource("3_ab2pd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1638248730]
 shape = SubResource("CircleShape2D_ab2pd")
