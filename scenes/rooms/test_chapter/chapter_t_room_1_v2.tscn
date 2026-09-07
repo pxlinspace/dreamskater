@@ -11,13 +11,13 @@
 
 [node name="DeathPolygonSpawnerTemp" parent="RoomGenerator" unique_id=1501289778 instance=ExtResource("4_jpbxj")]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RoomGenerator/DeathPolygonSpawnerTemp" unique_id=1494879581]
-build_mode = 1
-polygon = PackedVector2Array(339, 61, 379, 134, 474, 38, 569, 65, 622, 189, 581, 323, 323, 346, 80, 307, 64, 121, 179, 45)
+[node name="Polygon2D" type="Polygon2D" parent="RoomGenerator/DeathPolygonSpawnerTemp" unique_id=1405455025]
+position = Vector2(-38, -20)
+color = Color(1, 1, 1, 0.22745098)
+polygon = PackedVector2Array(291, 53, 348, 114, 381, 174, 366, 117, 422, 46, 514, 69, 536, 159, 508, 219, 438, 262, 359, 352, 263, 287, 204, 216, 166, 139, 208, 60)
 
 [node name="PlayerSpawner" parent="RoomGenerator" unique_id=731833195 instance=ExtResource("8_sq51a")]
-position = Vector2(160.00002, 204.00002)
+position = Vector2(200, 171)
 
 [node name="HookSpawner" parent="RoomGenerator" unique_id=560104995 instance=ExtResource("3_vb3du")]
-position = Vector2(476, 173)
-hook_type = 1
+position = Vector2(403, 124)
