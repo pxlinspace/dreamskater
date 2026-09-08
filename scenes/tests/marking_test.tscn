@@ -1,3 +1,6 @@
 [gd_scene format=3 uid="uid://dulmufmsp0nvb"]
 
+[ext_resource type="Script" uid="uid://b2j08b82we36o" path="res://scenes/tests/marking_test.gd" id="1_oe18m"]
+
 [node name="MarkingTest" type="Node2D" unique_id=691982456]
+script = ExtResource("1_oe18m")
