@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="DREAMSKATER"
-run/main_scene="uid://dulmufmsp0nvb"
+run/main_scene="uid://d32skquf6uaeu"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -52,6 +52,7 @@ tap={
 2d_physics/layer_1="player"
 2d_physics/layer_2="death areas"
 2d_physics/layer_3="hooks"
+2d_physics/layer_4="markings"
 
 [physics]
 
