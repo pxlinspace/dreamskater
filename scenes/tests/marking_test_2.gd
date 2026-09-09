@@ -3,6 +3,7 @@ extends Node2D
 const MARKING: PackedScene = preload("uid://dd0c3y8d3jqy5")
 
 var intersections: Array[Intersection] = []
+var polygons: Array[PackedVector2Array] = []
 var is_holding := false
 
 @onready var marking_container: Node2D = $MarkingContainer
@@ -26,6 +27,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		marking_container.get_child(-1).release()
 
 
+func _process(delta: float) -> void:
+	print(1.0 / delta) 
+
 func _physics_process(_delta: float) -> void:
 	if is_holding:
 		queue_redraw()
@@ -48,10 +52,15 @@ func _draw() -> void:
 		else:
 			draw_circle(intersection.position, 2, intersection.color)
 	
+	for polygon in polygons:
+		draw_colored_polygon(polygon, Color.RED)
+	
 	draw_line(mouse_area_segment_shape.a, mouse_area_segment_shape.b, Color.GREEN, 3)
 
 
-func _on_mouse_area_area_shape_entered(_area_rid: RID, other_marking: Marking, other_marking_shape_index: int, _local_shape_index: int) -> void:
+func _on_mouse_area_area_shape_entered(
+		_area_rid: RID, other_marking: Marking, other_marking_shape_index: int, _local_shape_index: int
+) -> void:
 	if not is_holding:
 		return
 	var player_marking: Marking = marking_container.get_child(-1)
@@ -67,7 +76,7 @@ func _on_mouse_area_area_shape_entered(_area_rid: RID, other_marking: Marking, o
 	if intersection_position == null:
 		return
 	
-	player_marking.add_point(intersection_position)
+	# player_marking.add_point(intersection_position)
 
 	var intersection := Intersection.new()
 	intersection.position = intersection_position
@@ -92,19 +101,66 @@ func is_closed_shape(root_intersection_index: int, starting_marking: Marking) ->
 	var intersection_index_sequence: PackedInt32Array = []
 
 
-	search_complete_shape_sequence(
+	var success: bool = search_complete_shape_sequence(
 			marking_index_sequence, intersection_index_sequence,
 			root_intersection_index, starting_marking, marking_indices_found, intersection_indices_found, true
 	)
 
-	print(marking_index_sequence)
-	print(intersection_index_sequence)
+	# print(marking_index_sequence)
+	# print(intersection_index_sequence)
 
 	for i in intersection_index_sequence:
 		intersections[i].highlighted = true
 	for i in marking_index_sequence:
 		marking_container.get_child(i).highlighted = true
+	
+	if success:
+		polygons.append(get_polygon_from_sequence(marking_index_sequence, intersection_index_sequence))
+	
 	return "bruh"
+
+
+func get_polygon_from_sequence(
+		marking_index_sequence: PackedInt32Array, intersection_index_sequence: PackedInt32Array
+) -> PackedVector2Array:
+	var polygon: PackedVector2Array = []
+	var size := intersection_index_sequence.size()
+	for i in size:
+		var intersection_position := intersections[intersection_index_sequence[i]].position
+		polygon.append(intersection_position)
+		var next_intersection_position := intersections[intersection_index_sequence[(i+1) % size]].position
+
+		var starting_index_a: int
+		var starting_index_b: int
+		var ending_index_a: int
+		var ending_index_b: int
+
+		var marking_points: PackedVector2Array = marking_container.get_child(marking_index_sequence[i]).points
+		for point_index in marking_points.size()-1:
+			var point: Vector2 = marking_points[point_index]
+			var next_point: Vector2 = marking_points[point_index+1]
+			if Geometry2D.segment_intersects_circle(point, next_point, intersection_position, 1) != -1:
+				starting_index_a = point_index
+				starting_index_b = point_index+1
+			elif Geometry2D.segment_intersects_circle(point, next_point, next_intersection_position, 1) != -1:
+				ending_index_a = point_index
+				ending_index_b = point_index+1
+		
+		print("starting indices: ", starting_index_a, ", ", starting_index_b)
+		print("ending indices: ", ending_index_a, ", ", ending_index_b)
+
+		var range_iterator: Array
+
+		if starting_index_b < ending_index_a:
+			range_iterator = range(starting_index_b, ending_index_a+1)
+		elif starting_index_a > ending_index_b:
+			range_iterator = range(starting_index_a, ending_index_b-1, -1)
+
+		for point_index: int in range_iterator:
+			polygon.append(marking_points[point_index])
+	
+	print(polygon)
+	return polygon
 
 
 func search_complete_shape_sequence(
@@ -158,9 +214,8 @@ class Intersection:
 	var marking_indices: PackedInt32Array
 	var color: = Color(randf(), randf(), randf()) # temp property for testing
 	var highlighted: bool = false # temp property for testing
+	var ultrahighlighted: bool = false
 
 
 # next steps:
-# tracking down the sequence of indices that form the closed shape
-# FUUCKKK since 2 markings can form multiple closed shapes, I'm gonna have to find a way to track down the positions of each intersection too.
-# fuuuuucccccckkkkkkk
+# okay, polygon creation works! The only problem is that sometimes it doesn't work lol, like there's no apparent pattern its just random. 
