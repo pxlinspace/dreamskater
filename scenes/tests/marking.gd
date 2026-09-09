@@ -37,11 +37,7 @@ func add_intersection(intersection_index: int) -> void:
 	intersection_indices.append(intersection_index)
 
 
-func release() -> void: #i'll make this better later lol
+func release() -> void:
 	var size := points.size()
-	if size >= 1:
-		add_collision_segment(size-2, size-1)
-	if size > 2:
-		add_collision_segment(size-3, size-2)
-	if size > 3:
-		add_collision_segment(size-4, size-3)
+	for i in (size - get_child_count() - 1):
+		add_collision_segment(size - i - 1, size - i - 2)
