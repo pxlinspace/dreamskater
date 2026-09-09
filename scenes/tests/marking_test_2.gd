@@ -37,10 +37,16 @@ func _physics_process(_delta: float) -> void:
 func _draw() -> void:
 	for marking: Marking in marking_container.get_children():
 		if marking.points.size() > 1:
-			draw_polyline(marking.points, Color.WHITE, 2)
+			if marking.highlighted:
+				draw_polyline(marking.points, Color.LIGHT_BLUE, 4)
+			else:
+				draw_polyline(marking.points, Color.WHITE, 2)
 	
 	for intersection in intersections:
-		draw_circle(intersection.position, 2, intersection.color)
+		if intersection.highlighted:
+			draw_circle(intersection.position, 4, Color.BLUE)
+		else:
+			draw_circle(intersection.position, 2, intersection.color)
 	
 	draw_line(mouse_area_segment_shape.a, mouse_area_segment_shape.b, Color.GREEN, 3)
 
@@ -57,7 +63,7 @@ func _on_mouse_area_area_shape_entered(_area_rid: RID, other_marking: Marking, o
 	var intersection_position: Variant = Geometry2D.segment_intersects_segment(
 			other_marking_segment_shape.a, other_marking_segment_shape.b,
 			mouse_area_segment_shape.a, mouse_area_segment_shape.b
-	) # there is a bug where soometimes this value returns nil instead of vector2. ill fix this later
+	) # there is a bug where sometimes this value returns nil instead of vector2. ill fix this later
 	if intersection_position == null:
 		return
 	
@@ -73,38 +79,52 @@ func _on_mouse_area_area_shape_entered(_area_rid: RID, other_marking: Marking, o
 	player_marking.add_intersection(intersection_index)
 	other_marking.add_intersection(intersection_index)
 
-
 	print(is_closed_shape(intersection_index, other_marking), "\n------------------\n\n")
 
 
-func is_closed_shape(root_intersection_index: int, starting_marking: Marking) -> bool:
+func is_closed_shape(root_intersection_index: int, starting_marking: Marking) -> Variant:
 	var starting_marking_index := starting_marking.get_index()
 
 	var marking_indices_found: PackedInt32Array = [starting_marking_index]
 	var intersection_indices_found: PackedInt32Array = []
 
-	var bruh: bool = search_complete_shape_sequence(
+	var marking_index_sequence: PackedInt32Array = []
+	var intersection_index_sequence: PackedInt32Array = []
+
+
+	search_complete_shape_sequence(
+			marking_index_sequence, intersection_index_sequence,
 			root_intersection_index, starting_marking, marking_indices_found, intersection_indices_found, true
 	)
 
-	# print("marking indicess: ", marking_indices_found)
-	# print("intersection indices: ", intersection_indices_found)
+	print(marking_index_sequence)
+	print(intersection_index_sequence)
 
-	return bruh
+	for i in intersection_index_sequence:
+		intersections[i].highlighted = true
+	for i in marking_index_sequence:
+		marking_container.get_child(i).highlighted = true
+	return "bruh"
 
 
 func search_complete_shape_sequence(
-		root_intersection_index: int, current_marking: Marking,
-		marking_indices_found: PackedInt32Array, intersection_indices_found: PackedInt32Array,
+		marking_index_sequence: PackedInt32Array,
+		intersection_index_sequence: PackedInt32Array,
+		root_intersection_index: int,
+		current_marking: Marking,
+		marking_indices_found: PackedInt32Array,
+		intersection_indices_found: PackedInt32Array,
 		just_started: bool = false
 ) -> bool:
+	var current_marking_index := current_marking.get_index()
 	var intersection_indices_to_search: PackedInt32Array = []
 
 	for intersection_index in current_marking.intersection_indices:
-		if just_started and intersection_index == root_intersection_index:
-			continue
-		
 		if intersection_index == root_intersection_index:
+			if just_started:
+				continue
+			intersection_index_sequence.append(intersection_index)
+			marking_index_sequence.append(current_marking_index)
 			return true
 		
 		if intersection_indices_found.has(intersection_index):
@@ -119,40 +139,25 @@ func search_complete_shape_sequence(
 				continue
 			var other_marking: Marking = marking_container.get_child(other_marking_index)
 			marking_indices_found.append(other_marking_index)
-			if search_complete_shape_sequence(root_intersection_index, other_marking, marking_indices_found, intersection_indices_found):
+			
+			var success: Variant = search_complete_shape_sequence(
+					marking_index_sequence, intersection_index_sequence,
+					root_intersection_index, other_marking, marking_indices_found, intersection_indices_found
+			)
+
+			if success:
+				intersection_index_sequence.append(intersection_index)
+				marking_index_sequence.append(current_marking_index)
 				return true
 
 	return false
 
 
-# func is_closed_shape(root_marking: Marking) -> bool:
-# 	var root_index := root_marking.get_index()
-# 	var target_index: int = root_marking.intersected_indices[0]
-# 	var indices_found: PackedInt32Array = [root_index]
-	
-# 	return find_unique_indices(root_index, target_index, indices_found)
-
-
-# func find_unique_indices(root_index: int, target_index: int, indices_found: PackedInt32Array) -> bool:
-# 	for intersected_index: int in marking_container.get_child(root_index).intersected_indices:
-# 		if root_index == target_index:
-# 			return false
-# 		if indices_found.has(intersected_index):
-# 			if intersected_index == target_index:
-# 				return true
-# 			else:
-# 				continue
-# 		indices_found.append(intersected_index)
-# 		print("indices found: ", indices_found)
-# 		if find_unique_indices(intersected_index, target_index, indices_found):
-# 			return true
-# 	return false
-
-
 class Intersection:
 	var position: Vector2
-	var marking_indices: PackedInt32Array # an intersection will only ever have 2 markings
+	var marking_indices: PackedInt32Array
 	var color: = Color(randf(), randf(), randf()) # temp property for testing
+	var highlighted: bool = false # temp property for testing
 
 
 # next steps:

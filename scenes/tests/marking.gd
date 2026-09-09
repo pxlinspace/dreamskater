@@ -6,6 +6,8 @@ var points: PackedVector2Array = []
 var intersected_indices: PackedInt32Array
 var intersection_indices: PackedInt32Array
 
+var highlighted: bool = false # temp variable for testing
+
 
 func add_point(point: Vector2) -> void:
 	points.append(point)
