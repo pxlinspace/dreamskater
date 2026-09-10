@@ -1,10 +1,10 @@
 class_name Marking extends Area2D
 
-const POINT_DISTANCE_SQUARED: float = 400.0
+const POINT_DISTANCE_SQUARED: float = 1000.0
 var points: PackedVector2Array = []
-
-var intersected_indices: PackedInt32Array
-var intersection_indices: PackedInt32Array
+var intersection_indices: PackedInt32Array = []
+var point_indices_intersected: PackedInt32Array = []
+var collision_segment_count := 0
 
 var highlighted: bool = false # temp variable for testing
 
@@ -25,21 +25,22 @@ func set_last_point(point: Vector2) -> void:
 
 func add_collision_segment(index_a: int, index_b: int) -> void:
 	var collision_shape := CollisionShape2D.new()
+	collision_shape.set_meta("point_index", mini(index_a, index_b))
+
 	var segment_shape := SegmentShape2D.new()
 	segment_shape.a = points[index_a]
 	segment_shape.b = points[index_b]
 	collision_shape.shape = segment_shape
+	collision_segment_count += 1
 	call_deferred("add_child", collision_shape)
 
 
-func add_intersected_marking(marking_index: int) -> void:
-	intersected_indices.append(marking_index)
-
-func add_intersection(intersection_index: int) -> void:
+func add_intersection(intersection_index: int, point_index_intersected: int) -> void:
 	intersection_indices.append(intersection_index)
+	point_indices_intersected.append(point_index_intersected)
+	print("point index intersected: ", point_index_intersected)
 
 
 func release() -> void:
-	var size := points.size()
-	for i in (size - get_child_count() - 1):
-		add_collision_segment(size - i - 1, size - i - 2)
+	for point_index in range(collision_segment_count, points.size() - 1):
+		add_collision_segment(point_index, point_index + 1)

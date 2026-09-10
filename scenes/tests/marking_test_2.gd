@@ -27,9 +27,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		marking_container.get_child(-1).release()
 
 
-func _process(delta: float) -> void:
-	print(1.0 / delta) 
-
 func _physics_process(_delta: float) -> void:
 	if is_holding:
 		queue_redraw()
@@ -45,6 +42,8 @@ func _draw() -> void:
 				draw_polyline(marking.points, Color.LIGHT_BLUE, 4)
 			else:
 				draw_polyline(marking.points, Color.WHITE, 2)
+		for point in marking.points:
+			draw_circle(point, 3, Color.WHITE)
 	
 	for intersection in intersections:
 		if intersection.highlighted:
@@ -53,7 +52,7 @@ func _draw() -> void:
 			draw_circle(intersection.position, 2, intersection.color)
 	
 	for polygon in polygons:
-		draw_colored_polygon(polygon, Color.RED)
+		draw_colored_polygon(polygon, Color(Color.RED, 0.5))
 	
 	draw_line(mouse_area_segment_shape.a, mouse_area_segment_shape.b, Color.GREEN, 3)
 
@@ -85,8 +84,10 @@ func _on_mouse_area_area_shape_entered(
 	intersections.append(intersection)
 	var intersection_index := intersections.size()-1
 
-	player_marking.add_intersection(intersection_index)
-	other_marking.add_intersection(intersection_index)
+	player_marking.add_intersection(intersection_index, player_marking.points.size()-2)
+	var point_index: int = other_marking_collision_shape.get_meta("point_index")
+	other_marking.add_intersection(intersection_index, point_index)
+	# other_marking.add_intersection(intersection_index, other_marking_collision_shape.get_meta("point_index"))
 
 	print(is_closed_shape(intersection_index, other_marking), "\n------------------\n\n")
 
@@ -125,39 +126,41 @@ func get_polygon_from_sequence(
 ) -> PackedVector2Array:
 	var polygon: PackedVector2Array = []
 	var size := intersection_index_sequence.size()
+
 	for i in size:
-		var intersection_position := intersections[intersection_index_sequence[i]].position
+		var intersection_index := intersection_index_sequence[i]
+		var next_intersection_index := intersection_index_sequence[(i+1) % size]
+
+		var intersection_position := intersections[intersection_index].position
 		polygon.append(intersection_position)
-		var next_intersection_position := intersections[intersection_index_sequence[(i+1) % size]].position
+		print("intersection position, ", intersection_index, " : ", intersection_position)
 
-		var starting_index_a: int
-		var starting_index_b: int
-		var ending_index_a: int
-		var ending_index_b: int
+		var marking: Marking = marking_container.get_child(marking_index_sequence[i])
+		var marking_points: PackedVector2Array = marking.points
+		var starting_point_index := marking.point_indices_intersected[marking.intersection_indices.find(intersection_index)]
+		var ending_point_index := marking.point_indices_intersected[marking.intersection_indices.find(next_intersection_index)]
 
-		var marking_points: PackedVector2Array = marking_container.get_child(marking_index_sequence[i]).points
-		for point_index in marking_points.size()-1:
-			var point: Vector2 = marking_points[point_index]
-			var next_point: Vector2 = marking_points[point_index+1]
-			if Geometry2D.segment_intersects_circle(point, next_point, intersection_position, 1) != -1:
-				starting_index_a = point_index
-				starting_index_b = point_index+1
-			elif Geometry2D.segment_intersects_circle(point, next_point, next_intersection_position, 1) != -1:
-				ending_index_a = point_index
-				ending_index_b = point_index+1
+		if starting_point_index == ending_point_index:
+			continue
+
+		print("Checking marking index: ", marking_index_sequence[i])
+		print("STARTING POINT INDEX: ", starting_point_index)
+		print("ENDING POINT INDEX: ", ending_point_index)
 		
-		print("starting indices: ", starting_index_a, ", ", starting_index_b)
-		print("ending indices: ", ending_index_a, ", ", ending_index_b)
+		if starting_point_index < ending_point_index:
+			starting_point_index += 1
+			for point_index in range(starting_point_index, ending_point_index+1):
+				polygon.append(marking_points[point_index])
+				print("marking point position, ", point_index, marking_points[point_index])
+		elif starting_point_index > ending_point_index:
+			ending_point_index += 1
+			for point_index in range(starting_point_index, ending_point_index-1, -1):
+				polygon.append(marking_points[point_index])
+				print("marking point position, ", point_index, marking_points[point_index])
 
-		var range_iterator: Array
-
-		if starting_index_b < ending_index_a:
-			range_iterator = range(starting_index_b, ending_index_a+1)
-		elif starting_index_a > ending_index_b:
-			range_iterator = range(starting_index_a, ending_index_b-1, -1)
-
-		for point_index: int in range_iterator:
-			polygon.append(marking_points[point_index])
+		print("Checking marking index after update: ", marking_index_sequence[i])
+		print("STARTING POINT INDEX: ", starting_point_index)
+		print("ENDING POINT INDEX: ", ending_point_index)
 	
 	print(polygon)
 	return polygon
