@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cqqqfea8cod36"]
+
+[ext_resource type="Script" uid="uid://celgmyen5p53h" path="res://scenes/tests/edge.gd" id="1_oa8l0"]
+
+[node name="Edge" type="Area2D" unique_id=1403006781]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_oa8l0")
