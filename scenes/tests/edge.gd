@@ -1,6 +1,9 @@
 class_name Edge extends Area2D
 
+const EDGE: PackedScene = preload("uid://cqqqfea8cod36")
+
 const POINT_DISTANCE_SQUARED: float = 1000.0
+
 var points: PackedVector2Array = []
 var intersection_indices: PackedInt32Array = []
 var point_indices_intersected: PackedInt32Array = []
@@ -17,10 +20,10 @@ func add_point(point: Vector2) -> void:
 		add_collision_segment(size-5, size-4)
 
 
-func set_last_point(point: Vector2) -> void:
+func set_last_point(point: Vector2, has_inbetween_points: bool = true) -> void:
 	var size := points.size()
 	points[size-1] = point
-	if size >= 2 and point.distance_squared_to(points[size-2]) >= POINT_DISTANCE_SQUARED:
+	if has_inbetween_points and size >= 2 and point.distance_squared_to(points[size-2]) >= POINT_DISTANCE_SQUARED:
 		add_point(point)
 
 func get_last_point(offset: int = 0) -> Vector2:
@@ -46,5 +49,31 @@ func add_intersection(intersection_index: int, point_index_intersected: int) -> 
 
 
 func release() -> void:
+	await get_tree().create_timer(0.1).timeout
 	for point_index in range(collision_segment_count, points.size() - 1):
 		add_collision_segment(point_index, point_index + 1)
+
+
+func split_at_segment(point_index: int, intersection_position: Vector2) -> void:
+	var edge_1_points := points.slice(0, point_index+1)
+	var edge_2_points := points.slice(point_index+1, points.size())
+	edge_1_points.append(intersection_position)
+	edge_2_points.insert(0, intersection_position)
+
+	print(point_index)
+	print("segment 1:", edge_1_points)
+	print("segment 2:", edge_2_points)
+
+	var edge_1: Edge = EDGE.instantiate()
+	edge_1.points = edge_1_points
+	add_sibling(edge_1)
+	edge_1.release()
+
+	var edge_2: Edge = EDGE.instantiate()
+	edge_2.points = edge_2_points
+	add_sibling(edge_2)
+	edge_2.release()
+
+	# im worried that edges overlap when split on the same segment?
+
+	queue_free()

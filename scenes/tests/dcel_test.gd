@@ -1,6 +1,9 @@
 extends Node2D
 
 const EDGE: PackedScene = preload("uid://cqqqfea8cod36")
+const MAX_DETECTOR_LENGTH: float = 40.0
+const MAX_DETECTOR_LENGTH_SQUARED: float = MAX_DETECTOR_LENGTH**2
+const FAST_PLAYER_SPEED_SQUARED: float = 600.0
 
 var is_holding := false
 var last_mouse_position: Vector2
@@ -10,15 +13,13 @@ var intersections: PackedVector2Array # temp for testing
 @onready var edge_container: Node2D = $EdgeContainer
 @onready var detector: RayCast2D = $Detector
 
-var bruh: int = 0
-
 
 func _draw() -> void:
 	for edge: Edge in edge_container.get_children():
 		for i in edge.points.size()-1:
 			var point := edge.points[i]
 			var next_point := edge.points[i+1]
-			draw_line(point, next_point, edge.color, 2)
+			draw_line(point, next_point, Color(edge.color, 0.5), 2)
 			var offset: Vector2 = (point - next_point).normalized().rotated(PI * 0.2) * 6
 			draw_line(point - offset, point + offset, Color.WHITE, 1)
 			draw_circle(point, 2, Color.WHITE)
@@ -32,52 +33,49 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("tap"):
 		is_holding = true
 		create_player_edge()
-		last_mouse_position = get_local_mouse_position()
-		detector.position = get_local_mouse_position()
-		detector.target_position = Vector2.ZERO
-		detector.set_deferred("enabled", true)
 
 	
 	elif event.is_action_released("tap"):
 		is_holding = false
-		get_player_edge().release()
-		detector.enabled = false
+		release_player_edge()
 
 
 func _physics_process(_delta: float) -> void:
-	if is_holding:
-		queue_redraw()
-		var mouse_position := get_local_mouse_position()
-		detector.position = last_mouse_position
-		detector.target_position = (mouse_position - last_mouse_position)
-		last_mouse_position = mouse_position
+	if not is_holding:
+		return
+	
+	queue_redraw()
+	var mouse_position := get_local_mouse_position()
+	detector.position = last_mouse_position
+	detector.target_position = (mouse_position - last_mouse_position)
 
-		if detector.target_position.length_squared() > 1600:
-			detector.target_position = detector.target_position.normalized() * 40
+	var is_player_moving_slowly := mouse_position.distance_squared_to(last_mouse_position) < FAST_PLAYER_SPEED_SQUARED
+	last_mouse_position = mouse_position
 
-		var player_edge := get_player_edge()
-		player_edge.set_last_point(get_local_mouse_position())
+	if detector.target_position.length_squared() > MAX_DETECTOR_LENGTH_SQUARED:
+		detector.target_position = detector.target_position.normalized() * MAX_DETECTOR_LENGTH
 
-		if detector.is_colliding():
-			
-			var edge: Edge = detector.get_collider() # A CollisionObject2D.
-			var shape_id := detector.get_collider_shape() # The shape index in the collider.
-			var owner_id := edge.shape_find_owner(shape_id) # The owner ID in the collider.
-			var collision_shape: CollisionShape2D = edge.shape_owner_get_owner(owner_id)
-			var segment_shape: SegmentShape2D = collision_shape.shape
-			
+	if detector.is_colliding():
+		process_detector()
+	
+	get_player_edge().set_last_point(get_local_mouse_position(), is_player_moving_slowly)
 
-			var intersection_position := detector.get_collision_point()
 
-			get_player_edge().set_last_point(intersection_position)
-			player_edge.release()
+func process_detector() -> void:
+	var edge: Edge = detector.get_collider() # A CollisionObject2D.
+	var shape_id := detector.get_collider_shape() # The shape index in the collider.
+	var owner_id := edge.shape_find_owner(shape_id) # The owner ID in the collider.
+	var collision_shape: CollisionShape2D = edge.shape_owner_get_owner(owner_id)
+	# var segment_shape: SegmentShape2D = collision_shape.shape
+	
+	var intersection_position := detector.get_collision_point()
+	edge.split_at_segment(collision_shape.get_meta("point_index"), intersection_position)
 
-			create_player_edge(intersection_position)
+	get_player_edge().set_last_point(intersection_position, false)
+	release_player_edge()
 
-			
-			print(bruh, ": ", intersection_position)
-			bruh += 1
-			intersections.append(intersection_position)
+	create_player_edge(intersection_position)
+	intersections.append(intersection_position)
 
 
 func create_player_edge(new_position: Vector2 = get_local_mouse_position()) -> void:
@@ -86,6 +84,16 @@ func create_player_edge(new_position: Vector2 = get_local_mouse_position()) -> v
 	edge.add_point(new_position)
 
 	edge_container.add_child(edge)
+
+	last_mouse_position = get_local_mouse_position()
+	detector.position = get_local_mouse_position()
+	detector.target_position = Vector2.ZERO
+	detector.set_deferred("enabled", true)
+
+
+func release_player_edge() -> void:
+	get_player_edge().release()
+	detector.enabled = false
 
 
 func get_player_edge() -> Edge:
