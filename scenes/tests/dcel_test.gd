@@ -25,8 +25,8 @@ func _draw() -> void:
 			draw_circle(point, 2, Color.WHITE)
 		draw_circle(edge.points[edge.points.size()-1], 4, Color.RED)
 	
-	for pos in intersections:
-		draw_circle(pos, 5, Color.BLUE)
+	# for pos in intersections:
+	# 	draw_circle(pos, 5, Color.BLUE)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -62,20 +62,78 @@ func _physics_process(_delta: float) -> void:
 
 
 func process_detector() -> void:
-	var edge: Edge = detector.get_collider() # A CollisionObject2D.
-	var shape_id := detector.get_collider_shape() # The shape index in the collider.
-	var owner_id := edge.shape_find_owner(shape_id) # The owner ID in the collider.
+	var edge: Edge = detector.get_collider()
+	var shape_id := detector.get_collider_shape()
+	var owner_id := edge.shape_find_owner(shape_id)
 	var collision_shape: CollisionShape2D = edge.shape_owner_get_owner(owner_id)
-	# var segment_shape: SegmentShape2D = collision_shape.shape
+
+	var segment_shape: SegmentShape2D = collision_shape.shape
+	var segment_vector: Vector2 = segment_shape.b - segment_shape.a
+	var is_main_side_touched: bool = detector.target_position.angle_to(segment_vector) <= 0
 	
+	# print(is_main_side_touched)
 	var intersection_position := detector.get_collision_point()
-	edge.split_at_segment(collision_shape.get_meta("point_index"), intersection_position)
-
-	get_player_edge().set_last_point(intersection_position, false)
-	release_player_edge()
-
-	create_player_edge(intersection_position)
 	intersections.append(intersection_position)
+
+	var split_result: Array[Edge] = edge.split_at_segment(collision_shape.get_meta("point_index"), intersection_position)
+
+	var edge_a: Edge = split_result[0]
+	var edge_b: Edge = split_result[1]
+
+	var old_main_prev := edge.main_half.prev
+	var old_main_next := edge.main_half.next
+	var old_twin_prev := edge.twin_half.prev
+	var old_twin_next := edge.twin_half.next
+
+	Edge.link_half_edges(old_main_prev, edge_a.main_half)
+	Edge.link_half_edges(edge_b.main_half, old_main_next)
+
+	Edge.link_half_edges(old_twin_prev, edge_b.twin_half)
+	Edge.link_half_edges(edge_a.twin_half, old_twin_next)
+
+
+	var edge_c: Edge = get_player_edge()
+
+	edge_c.set_last_point(intersection_position, false)
+	release_player_edge()
+	create_player_edge(intersection_position)
+
+	var edge_d: Edge = get_player_edge()
+
+	print("-------------")
+
+	if is_main_side_touched:
+		Edge.link_half_edges(edge_c.main_half, edge_b.main_half)
+		Edge.link_half_edges(edge_b.twin_half, edge_d.main_half)
+		Edge.link_half_edges(edge_d.twin_half, edge_a.twin_half)
+		Edge.link_half_edges(edge_a.main_half, edge_c.twin_half)
+
+		print(find_polygon(edge_a.main_half))
+		print(find_polygon(edge_c.main_half))
+		print(find_polygon(edge_b.twin_half))
+		print(find_polygon(edge_d.twin_half))
+	else:
+		Edge.link_half_edges(edge_c.main_half, edge_a.twin_half)
+		Edge.link_half_edges(edge_a.main_half, edge_d.main_half)
+		Edge.link_half_edges(edge_d.twin_half, edge_b.main_half)
+		Edge.link_half_edges(edge_b.twin_half, edge_c.twin_half)
+
+		print(find_polygon(edge_b.twin_half))
+		print(find_polygon(edge_c.main_half))
+		print(find_polygon(edge_a.main_half))
+		print(find_polygon(edge_d.twin_half))
+
+
+func find_polygon(start_half: Edge.HalfEdge) -> bool:
+	var sequence: Array[Edge.HalfEdge] = []
+	var current_half := start_half
+	while is_instance_valid(current_half):
+		sequence.append(current_half)
+		current_half = current_half.next
+		if current_half == start_half:
+			print(sequence)
+			return true
+	return false
 
 
 func create_player_edge(new_position: Vector2 = get_local_mouse_position()) -> void:
